@@ -1,0 +1,17 @@
+[Unit]
+Description=Crease iPhone Duo URL preview (crease.hermz.xyz)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/luke/tools/crease
+Environment=CREASE_HOST=127.0.0.1
+Environment=CREASE_PORT=8880
+Environment=CREASE_PUBLIC_HOST=https://crease.hermz.xyz
+ExecStart=/home/luke/tools/crease/.venv/bin/python -m uvicorn app:app --host 127.0.0.1 --port 8880 --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Crease: iPhone Duo cover vs inner</title>
+  <meta name="description" content="Paste a public URL. See it at iPhone Duo cover 5.4 in and inner 7.6 in viewports, with the 40-point crease drawn in." />
+  <meta name="theme-color" content="#12100c" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://crease.hermz.xyz/" />
+  <link rel="icon" type="image/svg+xml" href="/static/brand/logo.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Crease: iPhone Duo cover vs inner" />
+  <meta property="og:description" content="Two frames. Cover 466 by 678. Inner 951 by 669. Crease is 40 points." />
+  <meta property="og:url" content="https://crease.hermz.xyz/" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="page">
+    <header class="nav">
+      <a class="nav-brand" href="/" aria-label="Crease home">
+        <img src="/static/brand/logo.svg" width="28" height="28" alt="" />
+        <span>Crease</span>
+      </a>
+      <details class="nav-menu">
+        <summary class="btn ghost sm nav-menu-btn" aria-label="Menu">Menu</summary>
+        <div class="nav-menu-panel">
+          <a href="#how">How</a>
+          <a href="#limits">Limits</a>
+          <a href="https://github.com/mk7luke/crease" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </details>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <p class="eyebrow">Public URL preview. No account.</p>
+        <h1>Both Duo screens, one URL</h1>
+        <p class="lede">
+          Closed, iPhone Duo is a 5.4 in cover at 466 by 678 points.
+          Open, it is a 7.6 in canvas at 951 by 669.
+          The crease is a 40-point band, not half the width.
+          Paste a public URL. We put it in both frames.
+        </p>
+
+        <form class="cta-card" id="form" action="/api/preview" method="post">
+          <label class="field">
+            <span>Public URL</span>
+            <input id="url" name="url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://example.com" required />
+          </label>
+          <button type="submit" class="btn primary lg" id="go">Preview</button>
+          <p class="examples">
+            Try
+            <button type="button" class="chip" data-url="https://example.com">example.com</button>
+            <button type="button" class="chip" data-url="https://bare.hermz.link">Bare</button>
+            <button type="button" class="chip" data-url="https://catch.hermz.link">Catch</button>
+          </p>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="stage" id="stage" hidden>
+        <div class="stage-bar">
+          <p class="meta" id="meta"></p>
+          <div class="stage-actions">
+            <button type="button" class="btn ghost sm" id="toggle-pose" aria-pressed="false">Inner upright</button>
+            <button type="button" class="btn ghost sm" id="toggle-crease" aria-pressed="true">Crease on</button>
+            <button type="button" class="btn ghost sm" id="copy-link">Copy link</button>
+          </div>
+        </div>
+        <div class="frames" id="frames">
+          <figure class="device" id="cover-device">
+            <figcaption>
+              <span class="cap-name">Cover</span>
+              <span class="cap-size">5.4 in · 466 × 678</span>
+            </figcaption>
+            <div class="phone cover">
+              <div class="bezel">
+                <div class="notch" aria-hidden="true"></div>
+                <div class="screen-wrap" data-fit>
+                  <iframe class="screen" id="cover-frame" title="Cover display preview" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <figure class="device" id="inner-device">
+            <figcaption>
+              <span class="cap-name" id="inner-name">Inner open</span>
+              <span class="cap-size" id="inner-size">7.6 in · 951 × 669</span>
+            </figcaption>
+            <div class="phone inner" id="inner-phone">
+              <div class="bezel">
+                <div class="screen-wrap" data-fit>
+                  <iframe class="screen" id="inner-frame" title="Inner display preview" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+                  <div class="crease-band" id="crease-band" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section id="how" class="block">
+        <h2>How</h2>
+        <div class="steps">
+          <div class="step"><span class="badge">1</span><p>Paste a public http or https URL. Ports 80 and 443 only. Private IPs are refused.</p></div>
+          <div class="step"><span class="badge">2</span><p>We fetch the HTML, pin a base href, and show it in two iframes sized to Duo CSS points.</p></div>
+          <div class="step"><span class="badge">3</span><p>Cover stays 466 by 678. Inner starts landscape 951 by 669. A 40-point crease sits on the fold.</p></div>
+        </div>
+      </section>
+
+      <section id="limits" class="block">
+        <h2>Limits</h2>
+        <ul class="plain">
+          <li>20 previews per IP per hour. 1 MB HTML cap. 10 second fetch.</li>
+          <li>This is not a CSS autopsy. Bare does that. Crease is two viewports.</li>
+          <li>Sites that fight bots, demand login, or break out of iframes will look empty or wrong. That is the fetch, not your layout.</li>
+          <li>Numbers follow the iPhone Duo simulator profile (points, not pixels). Do not type them into a Swift .frame.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>Crease · <a href="https://crease.hermz.xyz">crease.hermz.xyz</a> · <a href="https://github.com/mk7luke/crease">GitHub</a></p>
+    </footer>
+  </div>
+  <script src="/static/home.js"></script>
+</body>
+</html>
