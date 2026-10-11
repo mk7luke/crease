@@ -2,6 +2,7 @@
 """Crease: preview a public URL on iPhone Duo cover vs inner viewports."""
 from __future__ import annotations
 
+import asyncio
 import html as html_lib
 import ipaddress
 import os
@@ -408,7 +409,7 @@ async def preview(request: Request) -> JSONResponse:
     if not isinstance(url, str):
         raise HTTPException(400, "need {url}")
     raw, _, _ = _assert_public_url(url)
-    fetched = _fetch_cached(raw)
+    fetched = await asyncio.to_thread(_fetch_cached, raw)
     ctype = fetched["headers"].get("content-type", "")
     is_html = "html" in ctype.lower() or fetched["body"][:64].lstrip().lower().startswith(
         (b"<!doctype", b"<html")
